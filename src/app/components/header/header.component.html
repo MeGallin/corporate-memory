@@ -1,14 +1,31 @@
-<nav class="">
-  <a class="" href="#">Corporate Memory</a>
+<nav class="header">
+  <a class="logo" routerLink="/">Corporate Memory</a>
+  <!-- <a routerLink="/" routerLinkActive="active">Home </a> -->
+  <div class="header-right">
+    <a
+      (click)="toggleNavbar()"
+      routerLink="/profile"
+      *ngIf="auth.isAuthenticated()"
+      routerLinkActive="active"
+      >Profile
+    </a>
 
-  <div class="">
-    <ul class="">
-      <li class="active">
-        <a class="nav-link" routerLink="/">Home </a>
-      </li>
-      <li class="active">
-        <a class="nav-link" routerLink="/profile">Profile </a>
-      </li>
-    </ul>
+    <a
+      (click)="toggleNavbar()"
+      (click)="auth.login()"
+      *ngIf="!auth.isAuthenticated()"
+      routerLinkActive="active"
+      >Members Login
+      <div class="showLoggedOut" *ngIf="!auth.isAuthenticated()"></div>
+    </a>
+
+    <a
+      (click)="toggleNavbar()"
+      (click)="auth.logout()"
+      *ngIf="auth.isAuthenticated()"
+      routerLinkActive="active"
+      >Log-Out
+      <div class="showLoggedIn" *ngIf="auth.isAuthenticated()"></div>
+    </a>
   </div>
 </nav>
