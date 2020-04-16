@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "corporate-memory": {
@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "corporate-memory"
+    }
+  },
+  "defaultProject": "corporate-memory",
+  "cli": {
+    "analytics": "fb2a88de-a36f-415d-a785-979c9df946cc"
+  }
 }
