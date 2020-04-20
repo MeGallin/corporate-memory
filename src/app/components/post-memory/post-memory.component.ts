@@ -41,5 +41,6 @@ export class PostMemoryComponent implements OnInit {
         return err;
       }
     );
+    this.blogFrom.reset();
   }
 }

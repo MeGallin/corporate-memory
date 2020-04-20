@@ -1,9 +1,23 @@
-<app-post-memory></app-post-memory>
+<div *ngIf="!showHideEditForm">
+  <app-post-memory></app-post-memory>
+</div>
+
+<div *ngIf="showHideEditForm">
+  <div *ngFor="let item of formArray">
+    <h1>Edit form to follow</h1>
+    <form #myForm>
+      <input type="text" name="id" value="{{item.id}}" />
+      <input type="text" name="title" value="{{item.title}}" />
+      <input type="text" name="memory" value="{{item.memory}}" />
+      <button (click)="handleEdit(myForm)">UPDATE</button>
+    </form>
+  </div>
+</div>
 
 <div *ngFor="let item of memories.reverse()">
   <h1>{{ item.title }}</h1>
   <p>[{{ item.id }}] {{ item.memory }}</p>
   <p><small>{{ item.name }}</small> {{ item.posted }}</p>
-
+  <button (click)="showHide(item)">EDIT</button>
   <hr />
 </div>

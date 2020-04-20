@@ -37,6 +37,13 @@ export class HttpService {
       .pipe(catchError(this.handleError));
   }
 
+  // UPDATE title and memory in DB
+  updateMemory(memory): Observable<any> {
+    console.log('memory SERVICE', memory);
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.updateMemoryUrl;
+    return this._Http.put(`${url}`, memory).pipe(catchError(this.handleError));
+  }
+
   // Send email and subId to session API
   postSession(sessionData): Observable<any> {
     console.log(sessionData);
