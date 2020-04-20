@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
 :root {
   --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -13,7 +13,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: "Lato", sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 .container {
   margin-right: auto;
@@ -41,6 +41,12 @@ body {
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
+}
+form {
+  border: 1px solid rgba(220, 220, 220, 1);
+  padding: 1em;
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.075);
 }
 .form-control {
   display: block;

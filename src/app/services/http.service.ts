@@ -44,6 +44,13 @@ export class HttpService {
     return this._Http.put(`${url}`, memory).pipe(catchError(this.handleError));
   }
 
+  // DELETE a memory from DB
+  deleteMemory(id: any): Observable<any> {
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.deleteMemoryUrl;
+    const params = new HttpParams().set('id', id.toLocaleString());
+    return this._Http.delete(`${url}`, { params: params });
+  }
+
   // Send email and subId to session API
   postSession(sessionData): Observable<any> {
     console.log(sessionData);

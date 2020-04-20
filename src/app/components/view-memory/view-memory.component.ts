@@ -15,9 +15,16 @@ export class ViewMemoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.showHideEditForm = false;
-    this._Http.getMemory().subscribe(res => {
-      // console.log(res);
-      this.memories = res;
+    setInterval(() => {
+      this._Http.getMemory().subscribe(res => {
+        this.memories = res;
+      });
+    }, 2000);
+  }
+
+  deleteMemory(id) {
+    this._Http.deleteMemory(id).subscribe(res => {
+      console.log('Memory Deleted'), res;
     });
   }
 
@@ -37,5 +44,8 @@ export class ViewMemoryComponent implements OnInit {
     this.showHideEditForm = true;
     this.formArray = [{ ...formData }];
     console.log(this.formArray);
+  }
+  closeEditDelete() {
+    this.showHideEditForm = false;
   }
 }
