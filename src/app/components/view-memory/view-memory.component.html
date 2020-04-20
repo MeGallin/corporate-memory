@@ -1,0 +1,9 @@
+<app-post-memory></app-post-memory>
+
+<div *ngFor="let item of memories.reverse()">
+  <h1>{{ item.title }}</h1>
+  <p>[{{ item.id }}] {{ item.memory }}</p>
+  <p><small>{{ item.name }}</small> {{ item.posted }}</p>
+
+  <hr />
+</div>

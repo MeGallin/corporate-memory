@@ -1,12 +1,14 @@
 <section>
-  <div class="col-12">
-    <h3>
-      Members Area
-    </h3>
-    <p>Welcome {{ profile?.nickname }}</p>
-    <img class="rounded-circle" src="{{ profile?.picture }}" alt="" />
+  <p>
+    <img
+      src="{{ profile?.picture }}"
+      alt="profile image"
+      width="36"
+      height="36"
+    />
+  </p>
 
-    {{ profile?.name }}
-    <pre class="full-profile">{{ profile | json }}</pre>
-  </div>
+  <app-view-memory></app-view-memory>
+  <!-- Name: {{ profile?.name }} Nickname: {{profile?.nickname}}
+  <pre class="full-profile">{{ profile | json }}</pre> -->
 </section>

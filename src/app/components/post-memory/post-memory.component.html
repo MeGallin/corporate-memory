@@ -1,0 +1,45 @@
+<form [formGroup]="blogFrom" (ngSubmit)="sendMessage(blogFrom.value)">
+  <!-- <div class="hidden">
+    <input type="text" formControlName="hiddenName" placeholder="Hidden Name" />
+  </div> -->
+  <!-- <div class="form-group">
+    <label>AccessToken</label>
+    <input
+      type="text"
+      class="form-control"
+      id="accessToken"
+      formControlName="accessToken"
+      placeholder="AccessToken"
+      required
+    />
+  </div> -->
+  <div class="form-group">
+    <label>Title</label>
+    <input
+      class="form-control"
+      type="text"
+      id="title"
+      formControlName="title"
+      placeholder="Title"
+    />
+  </div>
+
+  <div class="form-group">
+    <label>Memory</label>
+    <textarea
+      class="form-control"
+      id="memory"
+      formControlName="memory"
+      placeholder="Memory"
+      required
+    ></textarea>
+  </div>
+  <button
+    class="btn btn-outline-primary"
+    color="primary"
+    type="submit"
+    [disabled]="blogFrom.invalid"
+  >
+    Send Message
+  </button>
+</form>

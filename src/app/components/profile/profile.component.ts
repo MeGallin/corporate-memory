@@ -1,20 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthService } from "../../services/auth.service";
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
-  styleUrls: ["./profile.component.css"],
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   profile: any;
-  constructor(public auth: AuthService) {}
+  constructor(public _Auth: AuthService, private _Http: HttpService) {}
 
   ngOnInit(): void {
-    if (this.auth.userProfile) {
-      this.profile = this.auth.userProfile;
+    if (this._Auth.userProfile) {
+      this.profile = this._Auth.userProfile;
     } else {
-      this.auth.getProfile((err, profile) => {
+      this._Auth.getProfile((err, profile) => {
         this.profile = profile;
       });
     }
