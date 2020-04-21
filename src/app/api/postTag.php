@@ -12,16 +12,16 @@ if(isset($postData) && !empty($postData))
   //   print_r($request);
 	
   // Sanitize.
-  $subId = mysqli_real_escape_string($conn, trim($request->subId));
+  $memoryId = mysqli_real_escape_string($conn, trim($request->memoryId));
+  $tagName = mysqli_real_escape_string($conn, trim($request->tagName));
   $email = mysqli_real_escape_string($conn, trim($request->email));
-  $title = mysqli_real_escape_string($conn, trim($request->title));
-  $memory = mysqli_real_escape_string($conn, trim($request->memory));
+ 
 
 // session_start();
 $_SESSION['emailToken'] = "$email";   
   // Store.
-  $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`) VALUES 
-  ('{$subId}','{$email}','{$title}','{$memory}')";
+  $sql = "INSERT INTO `tags`(`memoryId`,`tagName`,`email`) VALUES 
+  ('{$memoryId}','{$tagName}','{$email}')";
 
   var_dump($sql);
 
@@ -29,10 +29,9 @@ $_SESSION['emailToken'] = "$email";
   {
     http_response_code(201);
     $data = [
-        'subId' => $subId,
+        'memoryId' => $memoryId,
+        'tagName' => $tagName,
         'email' => $email,
-        'title' => $title,
-        'memory' => $memory
     ];
     
     echo json_encode($data);

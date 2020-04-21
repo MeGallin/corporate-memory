@@ -53,10 +53,37 @@ export class HttpService {
 
   // Send email and subId to session API
   postSession(sessionData): Observable<any> {
-    console.log(sessionData);
+    console.log('sessionData SERVICE:', sessionData);
     const url = URL_CONFIG.baseUrl + URL_CONFIG.postSessionUrl;
     return this._Http
       .post(`${url}`, sessionData)
+      .pipe(catchError(this.handleError));
+  }
+
+  //GET tags
+  getTags(): Observable<any> {
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.getTagsUrl;
+    return this._Http
+      .get(`${url}`)
+      .pipe(
+        tap(res => {
+          // console.log(res);
+        })
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  //POST tags
+  postTag(tag): Observable<any> {
+    console.log(tag);
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.postTagUrl;
+    return this._Http
+      .post(`${url}`, tag)
+      .pipe(
+        map(res => {
+          return res;
+        })
+      )
       .pipe(catchError(this.handleError));
   }
 

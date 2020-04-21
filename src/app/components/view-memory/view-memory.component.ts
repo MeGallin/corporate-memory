@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-view-memory',
@@ -7,17 +9,35 @@ import { HttpService } from '../../services/http.service';
   styleUrls: ['./view-memory.component.css']
 })
 export class ViewMemoryComponent implements OnInit {
+  tagForm: FormGroup;
   public memories = [];
+  public tags = [];
+
+  public noMemories = 'loading....';
   showHideEditForm: boolean;
   public formArray = [];
 
-  constructor(private _Http: HttpService) {}
+  constructor(
+    private _Http: HttpService,
+    private formBuilder: FormBuilder,
+    private _Auth: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.tagForm = this.formBuilder.group({
+      tagName: ['']
+    });
+
     this.showHideEditForm = false;
+    console.log(this.memories);
+
     setInterval(() => {
       this._Http.getMemory().subscribe(res => {
         this.memories = res;
+        console.log(this.memories);
+      });
+      this._Http.getTags().subscribe(res => {
+        this.tags = res;
       });
     }, 2000);
   }
@@ -47,5 +67,22 @@ export class ViewMemoryComponent implements OnInit {
   }
   closeEditDelete() {
     this.showHideEditForm = false;
+  }
+
+  handleTag(tag, id) {
+    const email = this._Auth.userProfile.name;
+    const tagArray = { memoryId: id, email: email, ...tag.value };
+    console.log('tagArray', tagArray);
+    this._Http.postTag(JSON.stringify(tagArray)).subscribe(
+      res => {
+        console.log('Tag Created', res);
+        return res;
+      },
+      err => {
+        //  console.log('There was an error', err);
+        return err;
+      }
+    );
+    this.tagForm.reset();
   }
 }

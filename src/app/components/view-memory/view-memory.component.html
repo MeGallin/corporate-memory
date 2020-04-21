@@ -32,14 +32,46 @@
   </div>
 </div>
 
+<div *ngFor="let item of formArray" class="border-temp">
+  <form [formGroup]="tagForm" (ngSubmit)="handleTag(tagForm, inputValue.value)">
+    <input type="text" name="id" value="{{item.id}}" #inputValue hidden />
+    <div class="form-group">
+      <label>Tag Title</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="tagName"
+        placeholder="Tag"
+      />
+    </div>
+    <button type="submit">SubmitTag</button>
+  </form>
+</div>
+
 <div class="memories-wrapper">
-  <div class="memory-wrapper" *ngFor="let item of memories.reverse()">
-    <h1>{{ item.title }}</h1>
-    <p>[{{ item.id }}] {{ item.memory }}</p>
-    <p><small>{{ item.name }}</small> {{ item.posted }}</p>
-    <div class="button-wrapper">
-      <button (click)="showHide(item)">EDIT</button>
-      <button (click)="deleteMemory(item.id)">DELETE</button>
+  <div *ngIf="memories.length === 0">
+    {{noMemories}}
+  </div>
+  <div *ngIf="memories.length > 0">
+    <div class="memory-wrapper border-temp" *ngFor="let item of memories">
+      <div *ngFor="let tag of tags">
+        <div *ngIf="item.id === tag.memoryId">
+          <div class="tag-wrapper">
+            <div class="tag tag-wrapper">{{tag.tagName}}</div>
+          </div>
+        </div>
+      </div>
+
+      <button>Add Tag</button>
+      <h1>{{ item.title }}</h1>
+      <p>[{{ item.id }}] {{ item.memory }}</p>
+      <p><small>{{ item.name }}</small> {{ item.posted }}</p>
+      <div class="button-wrapper">
+        <button class="warning-colour" (click)="showHide(item)">EDIT</button>
+        <button class="danger-colour" (click)="deleteMemory(item.id)">
+          DELETE
+        </button>
+      </div>
     </div>
   </div>
 </div>

@@ -14,3 +14,12 @@
   display: flex;
   justify-content: space-between;
 }
+.tag-wrapper {
+  background-color: yellow;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.tag {
+  border: red 1px solid;
+}

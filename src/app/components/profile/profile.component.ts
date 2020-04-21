@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from '../../services/auth.service';
 import { HttpService } from '../../services/http.service';
 
@@ -19,5 +20,9 @@ export class ProfileComponent implements OnInit {
         this.profile = profile;
       });
     }
+  }
+  sendEmail(email) {
+    console.log(email);
+    this._Http.postSession(this.profile.name);
   }
 }

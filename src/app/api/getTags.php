@@ -1,12 +1,12 @@
 <?php
 include_once('config.php');
 
-
 $foo = $_SESSION['token'];
 // echo var_dump($foo);
 
   //echo "Connected successfully";
-$sql = "SELECT * FROM `memories` WHERE `email` = $foo order by Id DESC";
+$sql = "SELECT memories.*, tags.* FROM memories, tags 
+WHERE memories.email = $foo AND memories.id = tags.memoryId";
 $result = mysqli_query($conn,$sql); 
 $myArray = array();
 
