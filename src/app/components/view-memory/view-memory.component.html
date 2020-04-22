@@ -56,45 +56,64 @@
   </div>
 </div>
 
-<ng-container class="memories-wrapper">
+<ng-container>
+  <!-- Search Input -->
+  <div class="search-input-wrapper">
+    <input
+      class="form-control"
+      type="text"
+      placeholder="Search Title"
+      [(ngModel)]="searchTerm"
+      (keyup)="onSearch($event)"
+    />
+  </div>
+
+  <!-- spinner -->
   <ng-container *ngIf="memories.length === 0">
     <div class="spinner-wrapper">
       <app-loading-spinner></app-loading-spinner>
     </div>
   </ng-container>
-  search here
-  <ng-container *ngIf="memories.length > 0">
-    <div class="memory-wrapper" *ngFor="let item of memories">
-      <div class="tag-wrapper">
-        <div>
-          <button class="primary-colour" (click)="showHideTag()">
-            Add Tag
-          </button>
-        </div>
 
-        <div class="tagS-wrapper">
-          <div *ngFor="let tag of tags">
-            <ng-container *ngIf="item.id === tag.memoryId">
-              <div class="tag">
-                <span class="inner-tag">
-                  {{tag.tagName}}
-                </span>
-              </div>
-            </ng-container>
+  <!-- Memories -->
+  <ng-container *ngIf="memories.length > 0">
+    <div class="memories-wrapper">
+      <div
+        class="memory-wrapper"
+        *ngFor="let item of memories | memorySearch: searchTerm; "
+      >
+        <div class="tag-wrapper">
+          <div>
+            <button class="primary-colour" (click)="showHideTag()">
+              Add Tag
+            </button>
+          </div>
+
+          <div class="tagS-wrapper">
+            <div *ngFor="let tag of tags">
+              <ng-container *ngIf="item.id === tag.memoryId">
+                <div class="tag">
+                  <span class="inner-tag">
+                    {{tag.tagName}}
+                  </span>
+                </div>
+              </ng-container>
+            </div>
           </div>
         </div>
-      </div>
 
-      <h1>{{ item.title }}</h1>
-      <p>[{{ item.id }}] {{ item.memory }}</p>
-      <p><small>{{ item.name }}</small> {{ item.posted }}</p>
-      <div class="button-wrapper">
-        <button class="warning-colour" (click)="showEditForm(item)">
-          EDIT
-        </button>
-        <button class="danger-colour" (click)="deleteMemory(item.id)">
-          DELETE
-        </button>
+        <h1 class="heading">{{ item.title }}</h1>
+        <p>{{ item.memory }}</p>
+
+        <div class="button-wrapper">
+          <button class="warning-colour" (click)="showEditForm(item)">
+            EDIT
+          </button>
+          <button class="danger-colour" (click)="deleteMemory(item.id)">
+            DELETE
+          </button>
+        </div>
+        <small class="small-text"> {{ item.posted }}</small>
       </div>
     </div>
   </ng-container>

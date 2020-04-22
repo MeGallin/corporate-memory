@@ -16,6 +16,7 @@ import { CallbackComponent } from './components/callback/callback.component';
 import { ViewMemoryComponent } from './components/view-memory/view-memory.component';
 import { PostMemoryComponent } from './components/post-memory/post-memory.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { MemorySearchPipe } from './pipes/memory-search.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     CallbackComponent,
     ViewMemoryComponent,
     PostMemoryComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    MemorySearchPipe
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,6 @@
 
 
 session_start();
-$_SESSION['token'] = "'guy@deleteme.com'";
+$_SESSION['token'] = "'me@garyallin.uk'";
 
 ?>

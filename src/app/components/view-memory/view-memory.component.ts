@@ -13,6 +13,8 @@ export class ViewMemoryComponent implements OnInit {
   public memories = [];
   public tags = [];
 
+  searchTerm: string;
+
   showHideMemoryForm: boolean = true;
   showHideEditForm: boolean = false;
   showHideTagForm: boolean = false;
@@ -29,15 +31,15 @@ export class ViewMemoryComponent implements OnInit {
       tagName: ['']
     });
 
-    // setInterval(() => {
-    this._Http.getMemory().subscribe(res => {
-      this.memories = res;
-      console.log(this.memories);
-    });
-    this._Http.getTags().subscribe(res => {
-      this.tags = res;
-    });
-    // }, 2000);
+    setInterval(() => {
+      this._Http.getMemory().subscribe(res => {
+        this.memories = res;
+        console.log(this.memories);
+      });
+      this._Http.getTags().subscribe(res => {
+        this.tags = res;
+      });
+    }, 3600);
   }
 
   deleteMemory(id) {
@@ -88,5 +90,8 @@ export class ViewMemoryComponent implements OnInit {
       }
     );
     this.tagForm.reset();
+  }
+  onSearch(e) {
+    console.log(e);
   }
 }
