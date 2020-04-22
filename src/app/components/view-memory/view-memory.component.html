@@ -1,6 +1,6 @@
 <div [ngSwitch]="showHideMemoryForm">
   <div *ngSwitchCase="showHideTagForm">
-    <div *ngFor="let item of formArray" class="border-temp">
+    <div *ngFor="let item of formArray">
       <form
         [formGroup]="tagForm"
         (ngSubmit)="handleTag(tagForm, inputValue.value)"
@@ -62,17 +62,28 @@
       <app-loading-spinner></app-loading-spinner>
     </div>
   </ng-container>
+  search here
   <ng-container *ngIf="memories.length > 0">
-    <div class="memory-wrapper border-temp" *ngFor="let item of memories">
-      <div *ngFor="let tag of tags">
-        <ng-container *ngIf="item.id === tag.memoryId">
-          <div class="tag-wrapper">
-            <div class="tag tag-wrapper">{{tag.tagName}}</div>
-          </div>
-        </ng-container>
-      </div>
+    <div class="memory-wrapper" *ngFor="let item of memories">
+      <div class="tag-wrapper">
+        <div>
+          <button class="primary-colour" (click)="showHideTag()">
+            Add Tag
+          </button>
+        </div>
 
-      <button (click)="showHideTag()">Add Tag</button>
+        <div class="tagS-wrapper">
+          <div *ngFor="let tag of tags">
+            <ng-container *ngIf="item.id === tag.memoryId">
+              <div class="tag">
+                <span class="inner-tag">
+                  {{tag.tagName}}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
 
       <h1>{{ item.title }}</h1>
       <p>[{{ item.id }}] {{ item.memory }}</p>

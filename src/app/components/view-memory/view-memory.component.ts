@@ -29,15 +29,15 @@ export class ViewMemoryComponent implements OnInit {
       tagName: ['']
     });
 
-    setInterval(() => {
-      this._Http.getMemory().subscribe(res => {
-        this.memories = res;
-        console.log(this.memories);
-      });
-      this._Http.getTags().subscribe(res => {
-        this.tags = res;
-      });
-    }, 2000);
+    // setInterval(() => {
+    this._Http.getMemory().subscribe(res => {
+      this.memories = res;
+      console.log(this.memories);
+    });
+    this._Http.getTags().subscribe(res => {
+      this.tags = res;
+    });
+    // }, 2000);
   }
 
   deleteMemory(id) {
@@ -61,7 +61,6 @@ export class ViewMemoryComponent implements OnInit {
   showEditForm(formData) {
     this.showHideEditForm = true;
     this.formArray = [{ ...formData }];
-    console.log(this.formArray);
   }
   closeEditDelete() {
     this.showHideEditForm = false;
