@@ -1,5 +1,10 @@
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
 .memories-wrapper {
-  background-color: aqua;
   overflow-y: auto;
   height: 58vh;
 }

@@ -1,78 +1,91 @@
-<div *ngIf="!showHideEditForm">
-  <app-post-memory></app-post-memory>
-</div>
-
-<div *ngIf="showHideEditForm">
-  <div *ngFor="let item of formArray">
-    <form #myForm>
-      <button (click)="closeEditDelete()">X</button>
-      <input type="text" name="id" value="{{item.id}}" hidden />
-      <div class="form-group">
-        <label>Title</label>
-        <input
-          class="form-control"
-          type="text"
-          name="title"
-          value="{{item.title}}"
-        />
-      </div>
-
-      <div class="form-group">
-        <label>Memory</label>
-        <textarea
-          class="form-control"
-          type="text"
-          name="memory"
-          value="{{item.memory}}"
-        ></textarea>
-      </div>
-
-      <button (click)="handleEdit(myForm)">UPDATE</button>
-    </form>
-  </div>
-</div>
-
-<div *ngFor="let item of formArray" class="border-temp">
-  <form [formGroup]="tagForm" (ngSubmit)="handleTag(tagForm, inputValue.value)">
-    <input type="text" name="id" value="{{item.id}}" #inputValue hidden />
-    <div class="form-group">
-      <label>Tag Title</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="tagName"
-        placeholder="Tag"
-      />
+<div [ngSwitch]="showHideMemoryForm">
+  <div *ngSwitchCase="showHideTagForm">
+    <div *ngFor="let item of formArray" class="border-temp">
+      <form
+        [formGroup]="tagForm"
+        (ngSubmit)="handleTag(tagForm, inputValue.value)"
+      >
+        <button (click)="closeTag()">X</button>
+        <h1>Add Tag Form</h1>
+        <input type="text" name="id" value="{{item.id}}" #inputValue hidden />
+        <div class="form-group">
+          <label>Add a TAG</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="tagName"
+            placeholder="Tag"
+          />
+        </div>
+        <button type="submit">SubmitTag</button>
+      </form>
     </div>
-    <button type="submit">SubmitTag</button>
-  </form>
+  </div>
+  <div *ngSwitchCase="showHideEditForm">
+    <div *ngFor="let item of formArray">
+      <form #myForm>
+        <button (click)="closeEditDelete()">X</button>
+        <h1>Edit Form</h1>
+        <input type="text" name="id" value="{{item.id}}" hidden />
+        <div class="form-group">
+          <label>Title</label>
+          <input
+            class="form-control"
+            type="text"
+            name="title"
+            value="{{item.title}}"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>Memory</label>
+          <textarea
+            class="form-control"
+            type="text"
+            name="memory"
+            value="{{item.memory}}"
+          ></textarea>
+        </div>
+
+        <button (click)="handleEdit(myForm)">UPDATE</button>
+      </form>
+    </div>
+  </div>
+  <div *ngSwitchDefault>
+    <app-post-memory></app-post-memory>
+  </div>
 </div>
 
-<div class="memories-wrapper">
-  <div *ngIf="memories.length === 0">
-    {{noMemories}}
-  </div>
-  <div *ngIf="memories.length > 0">
+<ng-container class="memories-wrapper">
+  <ng-container *ngIf="memories.length === 0">
+    <div class="spinner-wrapper">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="memories.length > 0">
     <div class="memory-wrapper border-temp" *ngFor="let item of memories">
       <div *ngFor="let tag of tags">
-        <div *ngIf="item.id === tag.memoryId">
+        <ng-container *ngIf="item.id === tag.memoryId">
           <div class="tag-wrapper">
             <div class="tag tag-wrapper">{{tag.tagName}}</div>
           </div>
-        </div>
+        </ng-container>
       </div>
 
-      <button>Add Tag</button>
+      <button (click)="showHideTag()">Add Tag</button>
+
       <h1>{{ item.title }}</h1>
       <p>[{{ item.id }}] {{ item.memory }}</p>
       <p><small>{{ item.name }}</small> {{ item.posted }}</p>
       <div class="button-wrapper">
-        <button class="warning-colour" (click)="showHide(item)">EDIT</button>
+        <button class="warning-colour" (click)="showEditForm(item)">
+          EDIT
+        </button>
         <button class="danger-colour" (click)="deleteMemory(item.id)">
           DELETE
         </button>
       </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
 <hr />

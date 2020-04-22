@@ -15,6 +15,7 @@ import { DateTimeComponent } from './shared/date-time/date-time.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { ViewMemoryComponent } from './components/view-memory/view-memory.component';
 import { PostMemoryComponent } from './components/post-memory/post-memory.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PostMemoryComponent } from './components/post-memory/post-memory.compon
     DateTimeComponent,
     CallbackComponent,
     ViewMemoryComponent,
-    PostMemoryComponent
+    PostMemoryComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

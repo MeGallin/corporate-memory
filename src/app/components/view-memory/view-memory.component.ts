@@ -13,8 +13,9 @@ export class ViewMemoryComponent implements OnInit {
   public memories = [];
   public tags = [];
 
-  public noMemories = 'loading....';
-  showHideEditForm: boolean;
+  showHideMemoryForm: boolean = true;
+  showHideEditForm: boolean = false;
+  showHideTagForm: boolean = false;
   public formArray = [];
 
   constructor(
@@ -27,9 +28,6 @@ export class ViewMemoryComponent implements OnInit {
     this.tagForm = this.formBuilder.group({
       tagName: ['']
     });
-
-    this.showHideEditForm = false;
-    console.log(this.memories);
 
     setInterval(() => {
       this._Http.getMemory().subscribe(res => {
@@ -49,6 +47,7 @@ export class ViewMemoryComponent implements OnInit {
   }
 
   handleEdit(formData) {
+    this.showHideEditForm = false;
     const newForm = {
       id: formData.id.value,
       title: formData.title.value,
@@ -57,16 +56,22 @@ export class ViewMemoryComponent implements OnInit {
     this._Http.updateMemory(newForm).subscribe(memory => {
       console.log('Form Updated', memory);
     });
-    this.showHideEditForm = false;
   }
 
-  showHide(formData) {
+  showEditForm(formData) {
     this.showHideEditForm = true;
     this.formArray = [{ ...formData }];
     console.log(this.formArray);
   }
   closeEditDelete() {
     this.showHideEditForm = false;
+  }
+  closeTag() {
+    this.showHideTagForm = false;
+  }
+
+  showHideTag() {
+    this.showHideTagForm = true;
   }
 
   handleTag(tag, id) {
