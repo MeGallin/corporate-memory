@@ -16,12 +16,14 @@ if(isset($postData) && !empty($postData))
   $email = mysqli_real_escape_string($conn, trim($request->email));
   $title = mysqli_real_escape_string($conn, trim($request->title));
   $memory = mysqli_real_escape_string($conn, trim($request->memory));
+  $dueDate = mysqli_real_escape_string($conn, trim($request->dueDate));
 
-// session_start();
+session_start();
 $_SESSION['emailToken'] = "$email";   
+setcookie('emailToke', $email);
   // Store.
-  $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`) VALUES 
-  ('{$subId}','{$email}','{$title}','{$memory}')";
+  $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`, `dueDate`) VALUES 
+  ('{$subId}','{$email}','{$title}','{$memory}','{$dueDate}')";
 
   var_dump($sql);
 
@@ -32,7 +34,8 @@ $_SESSION['emailToken'] = "$email";
         'subId' => $subId,
         'email' => $email,
         'title' => $title,
-        'memory' => $memory
+        'memory' => $memory,
+        'dieDate' => $dueDate
     ];
     
     echo json_encode($data);

@@ -1,8 +1,11 @@
 <?php
 include_once('config.php');
 
-$foo = $_SESSION['token'];
+$foo = $_SESSION['emailToken'];
+
 // echo var_dump($foo);
+
+
 
   //echo "Connected successfully";
 $sql = "SELECT memories.*, tags.* FROM memories, tags 

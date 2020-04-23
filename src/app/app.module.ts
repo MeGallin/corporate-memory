@@ -17,6 +17,7 @@ import { ViewMemoryComponent } from './components/view-memory/view-memory.compon
 import { PostMemoryComponent } from './components/post-memory/post-memory.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { MemorySearchPipe } from './pipes/memory-search.pipe';
+import { TimeToPipe } from './pipes/time-to.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MemorySearchPipe } from './pipes/memory-search.pipe';
     ViewMemoryComponent,
     PostMemoryComponent,
     LoadingSpinnerComponent,
-    MemorySearchPipe
+    MemorySearchPipe,
+    TimeToPipe
   ],
   imports: [
     BrowserModule,

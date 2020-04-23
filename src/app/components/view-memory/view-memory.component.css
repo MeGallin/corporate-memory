@@ -49,3 +49,10 @@
 .memory-wrapper:nth-child(even) .heading {
   color: rgba(51, 51, 51, 1);
 }
+
+.reminder {
+  background-color: crimson;
+  font-size: 2em;
+  color: white;
+  padding: 6px;
+}

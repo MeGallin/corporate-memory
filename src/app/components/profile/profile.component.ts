@@ -18,11 +18,24 @@ export class ProfileComponent implements OnInit {
     } else {
       this._Auth.getProfile((err, profile) => {
         this.profile = profile;
+        const email = this.profile.name;
+        const emailArray = { email: email };
+        this.sendEmail(JSON.stringify({ ...emailArray }));
       });
     }
   }
   sendEmail(email) {
-    console.log(email);
-    this._Http.postSession(this.profile.name);
+    // console.log(email);
+    // const emailArray = { email: email };
+    this._Http.postSession(email).subscribe(
+      res => {
+        console.log('Session done', res);
+        return res;
+      },
+      err => {
+        //  console.log('There was an error', err);
+        return err;
+      }
+    );
   }
 }

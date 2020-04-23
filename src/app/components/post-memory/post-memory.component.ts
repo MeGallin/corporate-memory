@@ -20,7 +20,8 @@ export class PostMemoryComponent implements OnInit {
   ngOnInit(): void {
     this.blogFrom = this.formBuilder.group({
       title: [''],
-      memory: ['']
+      memory: [''],
+      dueDate: ['']
     });
   }
 

@@ -1,9 +1,6 @@
 <?php
 include_once('config.php');
-
-
-$foo = $_SESSION['token'];
-// echo var_dump($foo);
+$foo = $_SESSION['emailToken'];
 
   //echo "Connected successfully";
 $sql = "SELECT * FROM `memories` WHERE `email` = $foo order by Id DESC";

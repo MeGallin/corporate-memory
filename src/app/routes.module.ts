@@ -1,33 +1,33 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "./auth.guard";
-import { HomeComponent } from "./components/home/home.component";
-import { ProfileComponent } from "./components/profile/profile.component";
-import { CallbackComponent } from "./components/callback/callback.component";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './auth.guard';
+import { HomeComponent } from './components/home/home.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CallbackComponent } from './components/callback/callback.component';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
-    path: "home",
-    component: HomeComponent,
+    path: 'home',
+    component: HomeComponent
   },
   {
-    path: "profile",
+    path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard]
   },
   {
-    path: "callback",
-    component: CallbackComponent,
+    path: 'callback',
+    component: CallbackComponent
   },
   {
-    path: "**",
-    redirectTo: "",
-  },
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
@@ -35,9 +35,9 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       useHash: true,
-      scrollPositionRestoration: "enabled",
-    }),
+      scrollPositionRestoration: 'enabled'
+    })
   ],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class RoutesModule {}

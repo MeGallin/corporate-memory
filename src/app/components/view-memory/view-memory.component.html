@@ -7,7 +7,7 @@
       >
         <button (click)="closeTag()">X</button>
         <h1>Add Tag Form</h1>
-        <input type="text" name="id" value="{{item.id}}" #inputValue hidden />
+        <input type="text" name="id" value="{{ item.id }}" #inputValue hidden />
         <div class="form-group">
           <label>Add a TAG</label>
           <input
@@ -26,14 +26,14 @@
       <form #myForm>
         <button (click)="closeEditDelete()">X</button>
         <h1>Edit Form</h1>
-        <input type="text" name="id" value="{{item.id}}" hidden />
+        <input type="text" name="id" value="{{ item.id }}" hidden />
         <div class="form-group">
           <label>Title</label>
           <input
             class="form-control"
             type="text"
             name="title"
-            value="{{item.title}}"
+            value="{{ item.title }}"
           />
         </div>
 
@@ -43,8 +43,18 @@
             class="form-control"
             type="text"
             name="memory"
-            value="{{item.memory}}"
+            value="{{ item.memory }}"
           ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Due Date</label>
+          <input
+            class="form-control"
+            type="date"
+            name="dueDate"
+            value="{{ item.dueDate }}"
+          />
         </div>
 
         <button (click)="handleEdit(myForm)">UPDATE</button>
@@ -80,7 +90,7 @@
     <div class="memories-wrapper">
       <div
         class="memory-wrapper"
-        *ngFor="let item of memories | memorySearch: searchTerm; "
+        *ngFor="let item of memories | memorySearch: searchTerm"
       >
         <div class="tag-wrapper">
           <div>
@@ -94,13 +104,40 @@
               <ng-container *ngIf="item.id === tag.memoryId">
                 <div class="tag">
                   <span class="inner-tag">
-                    {{tag.tagName}}
+                    {{ tag.tagName }}
                   </span>
                 </div>
               </ng-container>
             </div>
           </div>
         </div>
+
+        <!-- <div *ngIf="item.dueDate !== '0000-00-00'; else notSet">
+          <p class="small-text">
+            This task is due in {{ item.dueDate | timeTo }}
+          </p>
+          <ng-template #notSet>No reminder set</ng-template>
+        </div> -->
+
+        <div
+          *ngIf="
+            item.dueDate !== '0000-00-00';
+            then content;
+            else other_content
+          "
+        ></div>
+        <ng-template #content>
+          <p class="medium-text">
+            <span [ngClass]="{ reminder: item.dueDate < now }">
+              Due {{ item.dueDate | timeTo }}
+            </span>
+          </p></ng-template
+        >
+        <ng-template #other_content>
+          <p class="small-text">
+            No reminder set
+          </p>
+        </ng-template>
 
         <h1 class="heading">{{ item.title }}</h1>
         <p>{{ item.memory }}</p>

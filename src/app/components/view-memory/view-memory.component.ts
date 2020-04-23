@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpService } from '../../services/http.service';
-import { AuthService } from '../../services/auth.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { HttpService } from "../../services/http.service";
+import { AuthService } from "../../services/auth.service";
+import * as Moment from "moment";
 
 @Component({
-  selector: 'app-view-memory',
-  templateUrl: './view-memory.component.html',
-  styleUrls: ['./view-memory.component.css']
+  selector: "app-view-memory",
+  templateUrl: "./view-memory.component.html",
+  styleUrls: ["./view-memory.component.css"],
 })
 export class ViewMemoryComponent implements OnInit {
   tagForm: FormGroup;
   public memories = [];
   public tags = [];
+  public now = Moment().format();
 
   searchTerm: string;
 
@@ -28,23 +30,22 @@ export class ViewMemoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.tagForm = this.formBuilder.group({
-      tagName: ['']
+      tagName: [""],
     });
 
     setInterval(() => {
-      this._Http.getMemory().subscribe(res => {
+      this._Http.getMemory().subscribe((res) => {
         this.memories = res;
-        console.log(this.memories);
       });
-      this._Http.getTags().subscribe(res => {
+      this._Http.getTags().subscribe((res) => {
         this.tags = res;
       });
     }, 3600);
   }
 
   deleteMemory(id) {
-    this._Http.deleteMemory(id).subscribe(res => {
-      console.log('Memory Deleted'), res;
+    this._Http.deleteMemory(id).subscribe((res) => {
+      console.log("Memory Deleted"), res;
     });
   }
 
@@ -53,10 +54,11 @@ export class ViewMemoryComponent implements OnInit {
     const newForm = {
       id: formData.id.value,
       title: formData.title.value,
-      memory: formData.memory.value
+      memory: formData.memory.value,
+      dueDate: formData.dueDate.value,
     };
-    this._Http.updateMemory(newForm).subscribe(memory => {
-      console.log('Form Updated', memory);
+    this._Http.updateMemory(newForm).subscribe((memory) => {
+      console.log("Form Updated", memory);
     });
   }
 
@@ -78,13 +80,13 @@ export class ViewMemoryComponent implements OnInit {
   handleTag(tag, id) {
     const email = this._Auth.userProfile.name;
     const tagArray = { memoryId: id, email: email, ...tag.value };
-    console.log('tagArray', tagArray);
+    console.log("tagArray", tagArray);
     this._Http.postTag(JSON.stringify(tagArray)).subscribe(
-      res => {
-        console.log('Tag Created', res);
+      (res) => {
+        console.log("Tag Created", res);
         return res;
       },
-      err => {
+      (err) => {
         //  console.log('There was an error', err);
         return err;
       }
