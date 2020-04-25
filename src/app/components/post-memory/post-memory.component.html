@@ -24,12 +24,14 @@
   <div class="form-group">
     <label>Due Date</label>
     <input
-      type="date"
+      type="text"
       class="form-control"
       id="dueDate"
       formControlName="dueDate"
       placeholder="Due Date"
-      required
+      bsDatepicker
+      [bsConfig]="{ isAnimated: true }"
+      [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
     />
   </div>
 

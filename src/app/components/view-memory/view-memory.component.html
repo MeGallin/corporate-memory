@@ -1,12 +1,39 @@
-<div [ngSwitch]="showHideMemoryForm">
-  <div *ngSwitchCase="showHideTagForm">
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-post-memory></app-post-memory>
+  </div>
+</ng-template>
+
+<!-- spinner -->
+<ng-container *ngIf="memories.length === 0">
+  <div class="spinner-wrapper">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-container>
+
+<!-- EDIT FORM -->
+<div [collapse]="isCollapsed" [isAnimated]="true">
+  <!-- TAG FORM -->
+  <div *ngIf="displayTagForm">
     <div *ngFor="let item of formArray">
+      <button class="btn btn-outline-secondary" (click)="closeTag()">
+        X
+      </button>
       <form
         [formGroup]="tagForm"
         (ngSubmit)="handleTag(tagForm, inputValue.value)"
       >
-        <button (click)="closeTag()">X</button>
-        <h1>Add Tag Form</h1>
         <input type="text" name="id" value="{{ item.id }}" #inputValue hidden />
         <div class="form-group">
           <label>Add a TAG</label>
@@ -17,15 +44,19 @@
             placeholder="Tag"
           />
         </div>
-        <button type="submit">SubmitTag</button>
+        <button class="btn btn-outline-primary" type="submit">
+          SubmitTag
+        </button>
       </form>
     </div>
   </div>
-  <div *ngSwitchCase="showHideEditForm">
+
+  <div *ngIf="displayEditForm">
     <div *ngFor="let item of formArray">
+      <button class="btn btn-outline-secondary" (click)="closeEditForm()">
+        X
+      </button>
       <form #myForm>
-        <button (click)="closeEditDelete()">X</button>
-        <h1>Edit Form</h1>
         <input type="text" name="id" value="{{ item.id }}" hidden />
         <div class="form-group">
           <label>Title</label>
@@ -51,108 +82,144 @@
           <label>Due Date</label>
           <input
             class="form-control"
-            type="date"
+            type="text"
             name="dueDate"
             value="{{ item.dueDate }}"
+            bsDatepicker
+            [bsConfig]="{ isAnimated: true }"
+            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
           />
         </div>
 
-        <button (click)="handleEdit(myForm)">UPDATE</button>
+        <button class="btn btn-outline-primary" (click)="handleEdit(myForm)">
+          UPDATE
+        </button>
       </form>
     </div>
   </div>
-  <div *ngSwitchDefault>
-    <app-post-memory></app-post-memory>
-  </div>
 </div>
 
-<ng-container>
-  <!-- Search Input -->
-  <div class="search-input-wrapper">
-    <input
-      class="form-control"
-      type="text"
-      placeholder="Search Title"
-      [(ngModel)]="searchTerm"
-      (keyup)="onSearch($event)"
-    />
-  </div>
-
-  <!-- spinner -->
-  <ng-container *ngIf="memories.length === 0">
-    <div class="spinner-wrapper">
-      <app-loading-spinner></app-loading-spinner>
-    </div>
-  </ng-container>
-
-  <!-- Memories -->
-  <ng-container *ngIf="memories.length > 0">
-    <div class="memories-wrapper">
+<!-- Memories -->
+<div *ngIf="memories.length > 0">
+  <div class="pulse-wrapper">
+    <app-pulsating-circle *ngIf="!countDownNumber"></app-pulsating-circle>
+    <div>
       <div
-        class="memory-wrapper"
-        *ngFor="let item of memories | memorySearch: searchTerm"
+        *ngIf="countDownNumber"
+        class="badge"
+        [ngClass]="{
+        'badge-success': countDownNumber >= 8, 
+        'badge-warning': countDownNumber <= 7 
+      }"
       >
-        <div class="tag-wrapper">
-          <div>
-            <button class="primary-colour" (click)="showHideTag()">
-              Add Tag
-            </button>
-          </div>
-
-          <div class="tagS-wrapper">
-            <div *ngFor="let tag of tags">
-              <ng-container *ngIf="item.id === tag.memoryId">
-                <div class="tag">
-                  <span class="inner-tag">
-                    {{ tag.tagName }}
-                  </span>
-                </div>
-              </ng-container>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div *ngIf="item.dueDate !== '0000-00-00'; else notSet">
-          <p class="small-text">
-            This task is due in {{ item.dueDate | timeTo }}
-          </p>
-          <ng-template #notSet>No reminder set</ng-template>
-        </div> -->
-
-        <div
-          *ngIf="
-            item.dueDate !== '0000-00-00';
-            then content;
-            else other_content
-          "
-        ></div>
-        <ng-template #content>
-          <p class="medium-text">
-            <span [ngClass]="{ reminder: item.dueDate < now }">
-              Due {{ item.dueDate | timeTo }}
-            </span>
-          </p></ng-template
-        >
-        <ng-template #other_content>
-          <p class="small-text">
-            No reminder set
-          </p>
-        </ng-template>
-
-        <h1 class="heading">{{ item.title }}</h1>
-        <p>{{ item.memory }}</p>
-
-        <div class="button-wrapper">
-          <button class="warning-colour" (click)="showEditForm(item)">
-            EDIT
-          </button>
-          <button class="danger-colour" (click)="deleteMemory(item.id)">
-            DELETE
-          </button>
-        </div>
-        <small class="small-text"> {{ item.posted }}</small>
+        Polling will resume in about {{countDownNumber}} seconds.
       </div>
     </div>
-  </ng-container>
-</ng-container>
-<hr />
+  </div>
+
+  <div class="summary-wrapper">
+    <span>
+      [{{numberOfMemories}}] memories.
+    </span>
+
+    <span>
+      You have a memory due
+      <span class="badge badge-pill badge-info"
+        >{{nearestToDueDate | timeTo}}</span
+      >
+    </span>
+  </div>
+  <div class="search-wrapper">
+    <!-- Create memory Button -->
+    <div class="search-input-wrapper">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="openModal(template)"
+      >
+        Create A memory
+      </button>
+    </div>
+
+    <div class=" arrow-wrapper">
+      <a (click)="sortType('dueDate_up')" *ngIf="!showFilterArrows">
+        <div class="arrow-up"></div>
+      </a>
+      <a (click)="sortType('dueDate_down')" *ngIf="!showFilterArrows">
+        <div class="arrow-down"></div>
+      </a>
+      <span class="arrow-text-spacer small-text">
+        DUE DATE
+      </span>
+    </div>
+
+    <!-- Search Input -->
+    <div class="search-input-wrapper">
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Search Title or Memory"
+        [(ngModel)]="searchTerm"
+        (keyup)="onSearch($event)"
+      />
+    </div>
+  </div>
+
+  <div class="memories-wrapper">
+    <div
+      class="memory-wrapper"
+      *ngFor="let item of memories | memorySearch: searchTerm"
+    >
+      <div class="tag-wrapper">
+        <!-- <button
+          class="btn btn-sm btn-outline-secondary"
+          (click)="showTagForm()"
+          [disabled]="disableTagButton"
+        >
+          ADD TAG XXX
+        </button> -->
+
+        <div class="tagS-wrapper">
+          <div *ngFor="let tag of tags">
+            <ng-container *ngIf="item.id === tag.memoryId">
+              <div>
+                <span class="badge badge-pill badge-success">
+                  {{ tag.tagName }}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <ng-template
+        *ngIf="item.dueDate !== '0000-00-00'; then content; else other_content"
+      ></ng-template>
+      <ng-template #content>
+        <p class="medium-text">
+          <span [ngClass]="{ reminder: item.dueDate < now }">
+            Due {{ item.dueDate | timeTo }}
+          </span>
+        </p></ng-template
+      >
+      <ng-template #other_content>
+        <p class="small-text">
+          No reminder set
+        </p>
+      </ng-template>
+
+      <h1 class="heading">{{ item.title }}</h1>
+      <p>{{ item.memory }}</p>
+
+      <div class="button-wrapper">
+        <button class="btn btn-outline-warning" (click)="showEditForm(item)">
+          EDIT
+        </button>
+        <button class="btn btn-outline-danger" (click)="deleteMemory(item.id)">
+          DELETE
+        </button>
+      </div>
+      <small class="small-text"> {{ item.posted }}</small>
+    </div>
+  </div>
+</div>

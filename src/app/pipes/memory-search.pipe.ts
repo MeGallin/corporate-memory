@@ -12,7 +12,8 @@ export class MemorySearchPipe implements PipeTransform {
 
     return memories.filter(
       memory =>
-        memory.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
+        memory.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1 ||
+        memory.memory.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1
     );
   }
 }
