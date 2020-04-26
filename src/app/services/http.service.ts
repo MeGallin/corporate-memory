@@ -56,11 +56,11 @@ export class HttpService {
           .pipe(delay(this.delayTrigger))
           .pipe(
             tap(res => {
-              console.log(res);
+              // console.log(res);
             })
           )
           .pipe(catchError(this.handleError))
-          .pipe(finalize(() => console.log('Sequence complete')));
+          .pipe(finalize(() => console.log(' Memory Sequence complete')));
       })
     );
   }
@@ -98,14 +98,19 @@ export class HttpService {
   //GET tags
   getTags(): Observable<any> {
     const url = URL_CONFIG.baseUrl + URL_CONFIG.getTagsUrl;
-    return this._Http
-      .get(`${url}`)
-      .pipe(
-        tap(res => {
-          // console.log(res);
-        })
-      )
-      .pipe(catchError(this.handleError));
+    return timer(1000, 2000).pipe(
+      switchMap(() => {
+        return this._Http
+          .get(`${url}`)
+          .pipe(
+            tap(res => {
+              // console.log(res);
+            })
+          )
+          .pipe(catchError(this.handleError))
+          .pipe(finalize(() => console.log(' Tag Sequence complete')));
+      })
+    );
   }
 
   //POST tags
@@ -120,6 +125,13 @@ export class HttpService {
         })
       )
       .pipe(catchError(this.handleError));
+  }
+
+  // Delete TAGS
+  deleteTag(id: any): Observable<any> {
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.deleteTagURL;
+    const params = new HttpParams().set('id', id.toLocaleString());
+    return this._Http.delete(`${url}`, { params: params });
   }
 
   // Error handling

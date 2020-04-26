@@ -1,6 +1,6 @@
 .pulse-wrapper {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: 0 1em;
   font-size: 0.75em;
   height: 2em;
@@ -26,11 +26,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 78vh;
+  height: 76vh;
 }
 .memories-wrapper {
   overflow-y: auto;
-  height: 78vh;
+  height: 76vh;
 }
 
 .memory-wrapper {
@@ -80,6 +80,12 @@
 
 .arrow-wrapper {
   display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+.arrow-inner-wrapper {
+  display: flex;
   justify-content: space-between;
   align-items: center;
 }
@@ -103,4 +109,19 @@
 }
 .arrow-text-spacer {
   margin: 0 0.5em;
+}
+
+.delete-tag {
+  cursor: pointer;
+  position: relative;
+  top: -8px;
+  right: 4px;
+  font-size: 0.5em;
+  background-color: crimson;
+  border-radius: 50%;
+  width: auto;
+  height: auto;
+  padding: 1px 4px;
+  color: white;
+  font-weight: 700;
 }

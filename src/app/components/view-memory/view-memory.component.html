@@ -1,6 +1,6 @@
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <h4 class="modal-title pull-left">Create a Memory</h4>
     <button
       type="button"
       class="close pull-right"
@@ -141,16 +141,20 @@
       </button>
     </div>
 
-    <div class=" arrow-wrapper">
-      <a (click)="sortType('dueDate_up')" *ngIf="!showFilterArrows">
-        <div class="arrow-up"></div>
-      </a>
-      <a (click)="sortType('dueDate_down')" *ngIf="!showFilterArrows">
-        <div class="arrow-down"></div>
-      </a>
-      <span class="arrow-text-spacer small-text">
+    <div class="arrow-wrapper">
+      <div class="arrow-text-spacer small-text">
         DUE DATE
-      </span>
+      </div>
+      <div>
+        <div class="arrow-inner-wrapper">
+          <a (click)="sortType('dueDate_up')" *ngIf="!showFilterArrows">
+            <div class="arrow-up"></div>
+          </a>
+          <a (click)="sortType('dueDate_down')" *ngIf="!showFilterArrows">
+            <div class="arrow-down"></div>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Search Input -->
@@ -186,6 +190,7 @@
                 <span class="badge badge-pill badge-success">
                   {{ tag.tagName }}
                 </span>
+                <span class="delete-tag" (click)="deleteTag(tag.id)">X</span>
               </div>
             </ng-container>
           </div>
@@ -207,10 +212,10 @@
           No reminder set
         </p>
       </ng-template>
-
+      <hr />
       <h1 class="heading">{{ item.title }}</h1>
       <p>{{ item.memory }}</p>
-
+      <hr />
       <div class="button-wrapper">
         <button class="btn btn-outline-warning" (click)="showEditForm(item)">
           EDIT

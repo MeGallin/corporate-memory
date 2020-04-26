@@ -10,6 +10,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class PostMemoryComponent implements OnInit {
   blogFrom: FormGroup;
+  public bsValue = new Date();
 
   constructor(
     private _Http: HttpService,

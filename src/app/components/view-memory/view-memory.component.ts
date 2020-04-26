@@ -19,8 +19,9 @@ export class ViewMemoryComponent implements OnInit {
 
   public showFilterArrows: boolean;
   public tags = [];
+
   public now = Moment().format();
-  bsValue = new Date();
+  public bsValue = new Date();
 
   searchTerm: string;
   public formArray = [];
@@ -168,7 +169,7 @@ export class ViewMemoryComponent implements OnInit {
     this.disableTagButton = true;
     const email = this._Auth.userProfile.name;
     const tagArray = { memoryId: id, email: email, ...tag.value };
-    console.log('tagArray', tagArray);
+    // console.log('tagArray', tagArray);
     this._Http.postTag(JSON.stringify(tagArray)).subscribe(
       res => {
         console.log('Tag Created', res);
@@ -183,10 +184,17 @@ export class ViewMemoryComponent implements OnInit {
   }
 
   onSearch(e) {
-    console.log(e);
+    // console.log(e);
   }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  // Delete Tag
+  deleteTag(id) {
+    this._Http.deleteTag(id).subscribe(res => {
+      console.log('Tag deleted', res);
+    });
   }
 }
