@@ -22,79 +22,102 @@
   </div>
 </ng-container>
 
-<!-- EDIT FORM -->
 <div [collapse]="isCollapsed" [isAnimated]="true">
   <!-- TAG FORM -->
   <div *ngIf="displayTagForm">
     <div *ngFor="let item of formArray">
-      <button class="btn btn-outline-secondary" (click)="closeTag()">
-        X
-      </button>
-      <form
-        [formGroup]="tagForm"
-        (ngSubmit)="handleTag(tagForm, inputValue.value)"
-      >
-        <input type="text" name="id" value="{{ item.id }}" #inputValue hidden />
-        <div class="form-group">
-          <label>Add a TAG</label>
-          <input
-            type="text"
-            class="form-control"
-            formControlName="tagName"
-            placeholder="Tag"
-          />
+      <div class="form-inner-wrapper">
+        <div>
+          <button class="btn btn-outline-secondary" (click)="closeTag()">
+            X
+          </button>
         </div>
-        <button class="btn btn-outline-primary" type="submit">
-          SubmitTag
-        </button>
-      </form>
+        <div>
+          <form
+            [formGroup]="tagForm"
+            (ngSubmit)="handleTag(tagForm, inputValue.value)"
+          >
+            <input
+              type="text"
+              name="id"
+              value="{{ item.id }}"
+              #inputValue
+              hidden
+            />
+            <div class="form-group">
+              <label>Add a TAG</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tagName"
+                placeholder="Tag"
+              />
+            </div>
+            <button class="btn btn-outline-primary" type="submit">
+              SubmitTag
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
+  <div class="form-wrapper">
+    <!-- EDIT FORM -->
+    <div *ngIf="displayEditForm">
+      <div *ngFor="let item of formArray">
+        <div class="form-inner-wrapper">
+          <div>
+            <button class="btn btn-outline-secondary" (click)="closeEditForm()">
+              X
+            </button>
+          </div>
+          <div>
+            <form #myForm>
+              <input type="text" name="id" value="{{ item.id }}" hidden />
+              <div class="form-group">
+                <label>Title</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="title"
+                  value="{{ item.title }}"
+                />
+              </div>
 
-  <div *ngIf="displayEditForm">
-    <div *ngFor="let item of formArray">
-      <button class="btn btn-outline-secondary" (click)="closeEditForm()">
-        X
-      </button>
-      <form #myForm>
-        <input type="text" name="id" value="{{ item.id }}" hidden />
-        <div class="form-group">
-          <label>Title</label>
-          <input
-            class="form-control"
-            type="text"
-            name="title"
-            value="{{ item.title }}"
-          />
+              <div class="form-group">
+                <label>Memory</label>
+                <textarea
+                  class="form-control"
+                  type="text"
+                  name="memory"
+                  rows="5"
+                  value="{{ item.memory }}"
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Due Date</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="dueDate"
+                  value="{{ item.dueDate }}"
+                  bsDatepicker
+                  [bsConfig]="{ isAnimated: true }"
+                  [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+                />
+              </div>
+
+              <button
+                class="btn btn-outline-primary"
+                (click)="handleEdit(myForm)"
+              >
+                UPDATE
+              </button>
+            </form>
+          </div>
         </div>
-
-        <div class="form-group">
-          <label>Memory</label>
-          <textarea
-            class="form-control"
-            type="text"
-            name="memory"
-            value="{{ item.memory }}"
-          ></textarea>
-        </div>
-
-        <div class="form-group">
-          <label>Due Date</label>
-          <input
-            class="form-control"
-            type="text"
-            name="dueDate"
-            value="{{ item.dueDate }}"
-            bsDatepicker
-            [bsConfig]="{ isAnimated: true }"
-            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
-          />
-        </div>
-
-        <button class="btn btn-outline-primary" (click)="handleEdit(myForm)">
-          UPDATE
-        </button>
-      </form>
+      </div>
     </div>
   </div>
 </div>
@@ -215,6 +238,25 @@
       <hr />
       <h1 class="heading">{{ item.title }}</h1>
       <p>{{ item.memory }}</p>
+
+      <ng-container *ngIf="item.dueDate !== '0000-00-00'">
+        <div class="form-check">
+          <input
+            #formData
+            class="form-check-input"
+            type="checkbox"
+            [checked]="item.reminder === '1'? true : false"
+            #defaultCheck1
+            (click)="reminder(item.id, item.reminder)"
+          />
+          <label class="form-check-label">
+            reminder set
+          </label>
+        </div>
+
+        <p>Reminder VALUE : {{item.reminder}}{{reminderChecked}}</p>
+      </ng-container>
+
       <hr />
       <div class="button-wrapper">
         <button class="btn btn-outline-warning" (click)="showEditForm(item)">

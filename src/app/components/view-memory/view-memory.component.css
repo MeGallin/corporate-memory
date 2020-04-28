@@ -26,11 +26,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 76vh;
+  height: 72vh;
 }
 .memories-wrapper {
   overflow-y: auto;
-  height: 76vh;
+  height: 72vh;
 }
 
 .memory-wrapper {
@@ -54,6 +54,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.form-inner-wrapper {
+  border: white 4px solid;
+  background-color: rgba(0, 0, 0, 0.075);
+  padding: 0.4em;
+  width: 100%;
+  align-items: stretch;
 }
 .tag {
   border-radius: 6px;

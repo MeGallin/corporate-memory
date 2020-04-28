@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import {
   Observable,
   throwError,
@@ -56,7 +56,7 @@ export class HttpService {
           .pipe(delay(this.delayTrigger))
           .pipe(
             tap(res => {
-              // console.log(res);
+              // console.log('SERVISE GET', res);
             })
           )
           .pipe(catchError(this.handleError))
@@ -86,9 +86,26 @@ export class HttpService {
     return this._Http.delete(`${url}`, { params: params });
   }
 
+  //UPDATE reminder
+  updateReminder(reminder): Observable<any> {
+    console.log('Update Service', reminder);
+    const url = URL_CONFIG.baseUrl + URL_CONFIG.updateReminderUrl;
+    return this._Http
+      .put(`${url}`, reminder)
+      .pipe(catchError(this.handleError));
+  }
+
   // Send email and subId to session API
+
   postSession(sessionData): Observable<any> {
     console.log('sessionData SERVICE:', sessionData);
+    const httpOptionsPlain = {
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      }),
+      responseType: 'json'
+    };
     const url = URL_CONFIG.baseUrl + URL_CONFIG.postSessionUrl;
     return this._Http
       .post(`${url}`, sessionData)
@@ -104,7 +121,7 @@ export class HttpService {
           .get(`${url}`)
           .pipe(
             tap(res => {
-              // console.log(res);
+              // console.log('TAGS SERVICE:', res);
             })
           )
           .pipe(catchError(this.handleError))

@@ -33,6 +33,8 @@ export class ViewMemoryComponent implements OnInit {
 
   toggleView: boolean = true;
 
+  public reminderChecked: boolean;
+
   modalRef: BsModalRef;
 
   constructor(
@@ -196,5 +198,21 @@ export class ViewMemoryComponent implements OnInit {
     this._Http.deleteTag(id).subscribe(res => {
       console.log('Tag deleted', res);
     });
+  }
+
+  // Reminder
+  reminder(id, reminder) {
+    console.log(id + reminder);
+    if (reminder === '1') {
+      const newReminder = '0';
+      const reminderArray = { id: id, reminder: newReminder };
+      this._Http.updateReminder(reminderArray).subscribe();
+    }
+
+    if (reminder === '0') {
+      const newReminder = '1';
+      const reminderArray = { id: id, reminder: newReminder };
+      this._Http.updateReminder(reminderArray).subscribe();
+    }
   }
 }

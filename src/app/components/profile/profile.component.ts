@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
   sendEmail(email) {
     // console.log(email);
     // const emailArray = { email: email };
