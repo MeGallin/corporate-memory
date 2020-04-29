@@ -4,7 +4,6 @@ include_once('config.php');
 if(isset($_SESSION['emailToken']))
 {
   $foo = $_SESSION['emailToken'];
-  
 
   //echo "Connected successfully";
     $sql = "SELECT memories.*, tags.* FROM memories, tags 

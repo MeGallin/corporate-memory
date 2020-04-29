@@ -6,6 +6,7 @@ $postdata = file_get_contents("php://input");
 
 if(isset($postdata) && !empty($postdata))
 {
+  var_dump($postdata);
   // Extract the data.
   $request = json_decode($postdata);
   // Validate.

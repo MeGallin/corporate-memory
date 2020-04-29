@@ -1,19 +1,16 @@
 <?php
-include_once('config.php');
-
+include 'config.php';
 
 if(isset($_SESSION['emailToken']))
 {
   $foo = $_SESSION['emailToken'];
 
-//   var_dump($foo);
+//   var_dump($_SESSION['emailToken']);
   
   //echo "Connected successfully";
     $sql = "SELECT * FROM `memories` WHERE `email` = $foo order by Id DESC";
     $result = mysqli_query($conn,$sql); 
-    $myArray = array();
-
-    
+    $myArray = array();    
 
     if ($result->num_rows > 0) {
     // output data of each row

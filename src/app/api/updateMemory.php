@@ -22,10 +22,11 @@ if(isset($postdata) && !empty($postdata))
   $title = mysqli_real_escape_string($conn, trim($request->title));
   $memory = mysqli_real_escape_string($conn, trim($request->memory));
   $dueDate = mysqli_real_escape_string($conn, trim($request->dueDate));
-   
+  $tagNames = mysqli_real_escape_string($conn, trim($request->tagNames));
 
   // Update.
-  $sql = "UPDATE `memories` SET `title`='$title',`memory`='$memory', `dueDate`='$dueDate' WHERE `id` = '{$id}' LIMIT 1";
+  $sql = "UPDATE `memories` SET `title`='$title',`memory`='$memory', `dueDate`=
+  DATE_ADD('$dueDate', INTERVAL 12 HOUR), `tagNames`='$tagNames' WHERE `id` = '{$id}' LIMIT 1";
 
   if(mysqli_query($conn, $sql))
   {
