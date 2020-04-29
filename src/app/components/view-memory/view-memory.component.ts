@@ -33,8 +33,6 @@ export class ViewMemoryComponent implements OnInit {
 
   toggleView: boolean = true;
 
-  public reminderChecked: boolean;
-
   modalRef: BsModalRef;
 
   constructor(
@@ -52,6 +50,8 @@ export class ViewMemoryComponent implements OnInit {
     this._Http.getMemory().subscribe(res => {
       this.memories = res;
       this.numberOfMemories = this.memories.length;
+
+      // console.log('ALL MEMORY DATA in component', res);
 
       // Filter out and sort nearest due
       const filterDate = this.memories.filter(memory => {
@@ -136,6 +136,7 @@ export class ViewMemoryComponent implements OnInit {
     this.disableTagButton = false;
     this.isCollapsed = false;
     this.formArray = [{ ...formData }];
+    // console.log('form Array', this.formArray);
   }
   handleEdit(formData) {
     this.isCollapsed = true;
@@ -143,7 +144,8 @@ export class ViewMemoryComponent implements OnInit {
       id: formData.id.value,
       title: formData.title.value,
       memory: formData.memory.value,
-      dueDate: formData.dueDate.value
+      dueDate: formData.dueDate.value,
+      tagNames: formData.tagNames.value
     };
     this._Http.updateMemory(newForm).subscribe(memory => {
       console.log('Form Updated', memory);
@@ -166,12 +168,14 @@ export class ViewMemoryComponent implements OnInit {
     this.displayTagForm = true;
   }
   handleTag(tag, id) {
+    console.log(tag, id);
     this.displayEditForm = true;
     this.displayTagForm = false;
     this.disableTagButton = true;
+
     const email = this._Auth.userProfile.name;
-    const tagArray = { memoryId: id, email: email, ...tag.value };
-    // console.log('tagArray', tagArray);
+    const tagArray = { memoryId: id, ...tag.value, email: email };
+    console.log('tagArray', tagArray);
     this._Http.postTag(JSON.stringify(tagArray)).subscribe(
       res => {
         console.log('Tag Created', res);

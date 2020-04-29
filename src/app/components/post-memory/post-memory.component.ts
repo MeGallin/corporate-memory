@@ -22,7 +22,8 @@ export class PostMemoryComponent implements OnInit {
     this.blogFrom = this.formBuilder.group({
       title: [''],
       memory: [''],
-      dueDate: ['']
+      dueDate: [''],
+      tagNames: ['']
     });
   }
 

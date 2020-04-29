@@ -29,7 +29,7 @@ import { URL_CONFIG } from '../__envDev';
 })
 export class HttpService {
   private delayTrigger: number = 0;
-  private triggerPolling: number;
+  public triggerPolling: number = 2000;
 
   constructor(private _Http: HttpClient) {}
 
@@ -48,7 +48,7 @@ export class HttpService {
   //get memories
   getMemory(): Observable<any> {
     const url = URL_CONFIG.baseUrl + URL_CONFIG.getMemoryUrl;
-    return timer(1000, 2000).pipe(
+    return timer(1000, this.triggerPolling).pipe(
       switchMap(() => {
         return this._Http
           .get(`${url}`)
@@ -96,7 +96,6 @@ export class HttpService {
   }
 
   // Send email and subId to session API
-
   postSession(sessionData): Observable<any> {
     console.log('sessionData SERVICE:', sessionData);
     const httpOptionsPlain = {
@@ -115,7 +114,7 @@ export class HttpService {
   //GET tags
   getTags(): Observable<any> {
     const url = URL_CONFIG.baseUrl + URL_CONFIG.getTagsUrl;
-    return timer(1000, 2000).pipe(
+    return timer(1000, this.triggerPolling).pipe(
       switchMap(() => {
         return this._Http
           .get(`${url}`)
@@ -132,7 +131,7 @@ export class HttpService {
 
   //POST tags
   postTag(tag): Observable<any> {
-    console.log(tag);
+    console.log('SERVICE DATA POST: ', tag);
     const url = URL_CONFIG.baseUrl + URL_CONFIG.postTagUrl;
     return this._Http
       .post(`${url}`, tag)

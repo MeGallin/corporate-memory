@@ -23,44 +23,6 @@
 </ng-container>
 
 <div [collapse]="isCollapsed" [isAnimated]="true">
-  <!-- TAG FORM -->
-  <div *ngIf="displayTagForm">
-    <div *ngFor="let item of formArray">
-      <div class="form-inner-wrapper">
-        <div>
-          <button class="btn btn-outline-secondary" (click)="closeTag()">
-            X
-          </button>
-        </div>
-        <div>
-          <form
-            [formGroup]="tagForm"
-            (ngSubmit)="handleTag(tagForm, inputValue.value)"
-          >
-            <input
-              type="text"
-              name="id"
-              value="{{ item.id }}"
-              #inputValue
-              hidden
-            />
-            <div class="form-group">
-              <label>Add a TAG</label>
-              <input
-                type="text"
-                class="form-control"
-                formControlName="tagName"
-                placeholder="Tag"
-              />
-            </div>
-            <button class="btn btn-outline-primary" type="submit">
-              SubmitTag
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="form-wrapper">
     <!-- EDIT FORM -->
     <div *ngIf="displayEditForm">
@@ -108,6 +70,16 @@
                 />
               </div>
 
+              <div class="form-group">
+                <label>TAG</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  name="tagNames"
+                  value="{{ item.tagNames }}"
+                />
+              </div>
+
               <button
                 class="btn btn-outline-primary"
                 (click)="handleEdit(myForm)"
@@ -116,6 +88,49 @@
               </button>
             </form>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TAG FORM -->
+  <div *ngIf="displayTagForm">
+    <div *ngFor="let item of formArray">
+      <div class="form-inner-wrapper">
+        <div>
+          <button class="btn btn-outline-secondary" (click)="closeTag()">
+            X
+          </button>
+        </div>
+        <div>
+          <form
+            [formGroup]="tagForm"
+            (ngSubmit)="handleTag(tagForm, inputValue.value)"
+          >
+            <input
+              type="text"
+              name="id"
+              value="{{ item.id }}"
+              #inputValue
+              hidden
+            />
+            <div class="form-group">
+              <label>Add A SUB TAG</label>
+
+              <input
+                type="text"
+                class="form-control"
+                formControlName="tagName"
+                placeholder="SUB TAG"
+              />
+              <span
+                >Please note, these tags are no searchable. They can be added to
+                provide clarity.</span
+              >
+            </div>
+            <button class="btn btn-outline-primary" type="submit">
+              SubmitTag
+            </button>
+          </form>
         </div>
       </div>
     </div>
@@ -198,30 +213,30 @@
       *ngFor="let item of memories | memorySearch: searchTerm"
     >
       <div class="tag-wrapper">
-        <!-- <button
-          class="btn btn-sm btn-outline-secondary"
-          (click)="showTagForm()"
-          [disabled]="disableTagButton"
-        >
-          ADD TAG XXX
-        </button> -->
-
-        <div class="tagS-wrapper">
-          <div *ngFor="let tag of tags">
-            <ng-container *ngIf="item.id === tag.memoryId">
-              <div>
-                <span class="badge badge-pill badge-success">
-                  {{ tag.tagName }}
-                </span>
-                <span class="delete-tag" (click)="deleteTag(tag.id)">X</span>
-              </div>
-            </ng-container>
+        <ng-container *ngIf="item.tagNames">
+          <div>
+            <span class="badge badge-pill badge-warning">
+              {{ item.tagNames }}
+            </span>
           </div>
-        </div>
+
+          <div class="tagS-wrapper">
+            <div *ngFor="let tag of tags">
+              <ng-container *ngIf="item.id === tag.memoryId">
+                <div>
+                  <span class="badge badge-pill badge-info">
+                    {{ tag.tagName }}
+                  </span>
+                  <span class="delete-tag" (click)="deleteTag(tag.id)">X</span>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
       </div>
 
       <ng-template
-        *ngIf="item.dueDate !== '0000-00-00'; then content; else other_content"
+        *ngIf="item.dueDate !== '0000-00-00 00:00:00'; then content; else other_content"
       ></ng-template>
       <ng-template #content>
         <p class="medium-text">
@@ -239,7 +254,7 @@
       <h1 class="heading">{{ item.title }}</h1>
       <p>{{ item.memory }}</p>
 
-      <ng-container *ngIf="item.dueDate !== '0000-00-00'">
+      <ng-container *ngIf="item.dueDate !== '0000-00-00 00:00:00'">
         <div class="form-check">
           <input
             #formData
@@ -254,7 +269,9 @@
           </label>
         </div>
 
-        <p>Reminder VALUE : {{item.reminder}}{{reminderChecked}}</p>
+        <div class="small-text">
+          {{item.reminder === '1' ? item.dueDate : ''}}
+        </div>
       </ng-container>
 
       <hr />
