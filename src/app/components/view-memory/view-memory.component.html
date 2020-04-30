@@ -146,25 +146,23 @@
         *ngIf="countDownNumber"
         class="badge"
         [ngClass]="{
-        'badge-success': countDownNumber >= 8, 
-        'badge-warning': countDownNumber <= 7 
-      }"
+          'badge-success': countDownNumber >= 8,
+          'badge-warning': countDownNumber <= 7
+        }"
       >
-        Polling will resume in about {{countDownNumber}} seconds.
+        Polling will resume in about {{ countDownNumber }} seconds.
       </div>
     </div>
   </div>
 
   <div class="summary-wrapper">
-    <span>
-      [{{numberOfMemories}}] memories.
-    </span>
+    <span> [{{ numberOfMemories }}] memories. </span>
 
     <span>
       You have a memory due
-      <span class="badge badge-pill badge-info"
-        >{{nearestToDueDate | timeTo}}</span
-      >
+      <span class="badge badge-pill badge-info">{{
+        nearestToDueDate | timeTo
+      }}</span>
     </span>
   </div>
   <div class="search-wrapper">
@@ -202,6 +200,7 @@
         type="text"
         placeholder="Search Title or Memory"
         [(ngModel)]="searchTerm"
+        value=""
         (keyup)="onSearch($event)"
       />
     </div>
@@ -236,7 +235,11 @@
       </div>
 
       <ng-template
-        *ngIf="item.dueDate !== '0000-00-00 00:00:00'; then content; else other_content"
+        *ngIf="
+          item.dueDate !== '0000-00-00 00:00:00';
+          then content;
+          else other_content
+        "
       ></ng-template>
       <ng-template #content>
         <p class="medium-text">
@@ -260,7 +263,7 @@
             #formData
             class="form-check-input"
             type="checkbox"
-            [checked]="item.reminder === '1'? true : false"
+            [checked]="item.reminder === '1' ? true : false"
             #defaultCheck1
             (click)="reminder(item.id, item.reminder)"
           />
@@ -270,7 +273,7 @@
         </div>
 
         <div class="small-text">
-          {{item.reminder === '1' ? item.dueDate : ''}}
+          {{ item.reminder === "1" ? item.dueDate : "" }}
         </div>
       </ng-container>
 

@@ -1,14 +1,14 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpService } from '../../services/http.service';
-import { AuthService } from '../../services/auth.service';
-import * as Moment from 'moment';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Component, OnInit, TemplateRef } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { HttpService } from "../../services/http.service";
+import { AuthService } from "../../services/auth.service";
+import * as Moment from "moment";
+import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 
 @Component({
-  selector: 'app-view-memory',
-  templateUrl: './view-memory.component.html',
-  styleUrls: ['./view-memory.component.css']
+  selector: "app-view-memory",
+  templateUrl: "./view-memory.component.html",
+  styleUrls: ["./view-memory.component.css"],
 })
 export class ViewMemoryComponent implements OnInit {
   tagForm: FormGroup;
@@ -44,18 +44,18 @@ export class ViewMemoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.tagForm = this.formBuilder.group({
-      tagName: ['']
+      tagName: [""],
     });
 
-    this._Http.getMemory().subscribe(res => {
+    this._Http.getMemory().subscribe((res) => {
       this.memories = res;
       this.numberOfMemories = this.memories.length;
 
       // console.log('ALL MEMORY DATA in component', res);
 
       // Filter out and sort nearest due
-      const filterDate = this.memories.filter(memory => {
-        if (memory.dueDate !== '0000-00-00') {
+      const filterDate = this.memories.filter((memory) => {
+        if (memory.dueDate !== "0000-00-00") {
           return memory;
         }
       });
@@ -68,7 +68,7 @@ export class ViewMemoryComponent implements OnInit {
       // Filter out and sort nearest due
     });
 
-    this._Http.getTags().subscribe(res => {
+    this._Http.getTags().subscribe((res) => {
       this.tags = res;
     });
   }
@@ -103,22 +103,22 @@ export class ViewMemoryComponent implements OnInit {
   }
 
   sortType(sort) {
-    if (sort === 'dueDate_up' || sort === 'dueDate_down') {
+    if (sort === "dueDate_up" || sort === "dueDate_down") {
       if (this.countDownNumber) {
         false;
       } else {
-        this._Http.countDown().subscribe(res => {
+        this._Http.countDown().subscribe((res) => {
           this.countDownNumber = res;
         });
       }
     }
 
-    if (sort === 'dueDate_up') {
+    if (sort === "dueDate_up") {
       this.memories.sort(this.filterByDueDateUP);
       this.showFilterArrows = false;
     }
 
-    if (sort === 'dueDate_down') {
+    if (sort === "dueDate_down") {
       this.memories.sort(this.filterByDueDateDOWN);
       this.showFilterArrows = false;
     }
@@ -126,8 +126,8 @@ export class ViewMemoryComponent implements OnInit {
   // END Filtering
 
   deleteMemory(id) {
-    this._Http.deleteMemory(id).subscribe(res => {
-      console.log('Memory Deleted'), res;
+    this._Http.deleteMemory(id).subscribe((res) => {
+      console.log("Memory Deleted"), res;
     });
   }
 
@@ -145,10 +145,10 @@ export class ViewMemoryComponent implements OnInit {
       title: formData.title.value,
       memory: formData.memory.value,
       dueDate: formData.dueDate.value,
-      tagNames: formData.tagNames.value
+      tagNames: formData.tagNames.value,
     };
-    this._Http.updateMemory(newForm).subscribe(memory => {
-      console.log('Form Updated', memory);
+    this._Http.updateMemory(newForm).subscribe((memory) => {
+      console.log("Form Updated", memory);
     });
   }
   closeEditForm() {
@@ -175,13 +175,13 @@ export class ViewMemoryComponent implements OnInit {
 
     const email = this._Auth.userProfile.name;
     const tagArray = { memoryId: id, ...tag.value, email: email };
-    console.log('tagArray', tagArray);
+    console.log("tagArray", tagArray);
     this._Http.postTag(JSON.stringify(tagArray)).subscribe(
-      res => {
-        console.log('Tag Created', res);
+      (res) => {
+        console.log("Tag Created", res);
         return res;
       },
-      err => {
+      (err) => {
         //  console.log('There was an error', err);
         return err;
       }
@@ -199,22 +199,22 @@ export class ViewMemoryComponent implements OnInit {
 
   // Delete Tag
   deleteTag(id) {
-    this._Http.deleteTag(id).subscribe(res => {
-      console.log('Tag deleted', res);
+    this._Http.deleteTag(id).subscribe((res) => {
+      console.log("Tag deleted", res);
     });
   }
 
   // Reminder
   reminder(id, reminder) {
     console.log(id + reminder);
-    if (reminder === '1') {
-      const newReminder = '0';
+    if (reminder === "1") {
+      const newReminder = "0";
       const reminderArray = { id: id, reminder: newReminder };
       this._Http.updateReminder(reminderArray).subscribe();
     }
 
-    if (reminder === '0') {
-      const newReminder = '1';
+    if (reminder === "0") {
+      const newReminder = "1";
       const reminderArray = { id: id, reminder: newReminder };
       this._Http.updateReminder(reminderArray).subscribe();
     }
