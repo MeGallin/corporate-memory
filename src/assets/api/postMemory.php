@@ -21,12 +21,12 @@ if(isset($postData) && !empty($postData))
 
 session_start();
 $_SESSION['emailToken'] = "$email";   
-setcookie('emailToke', $email);
+// setcookie('emailToke', $email);
   // Store.
   $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`, `dueDate`, `tagNames`) VALUES 
   ('{$subId}','{$email}','{$title}','{$memory}','{$dueDate}', '$tagNames')";
 
-  var_dump($sql);
+  // var_dump($sql);
 
   if(mysqli_query($conn,$sql))
   {

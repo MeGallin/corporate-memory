@@ -22,14 +22,15 @@ import {
   distinct,
   finalize,
 } from "rxjs/operators";
-import { URL_CONFIG } from "../__envDev";
+// import { URL_CONFIG } from "../__envDev";
+import { URL_CONFIG } from "../__envProd";
 
 @Injectable({
   providedIn: "root",
 })
 export class HttpService {
   private delayTrigger: number = 0;
-  public triggerPolling: number = 2000;
+  public triggerPolling: number = 20000;
 
   constructor(private _Http: HttpClient) {}
 

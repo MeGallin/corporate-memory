@@ -55,7 +55,7 @@ export class ViewMemoryComponent implements OnInit {
 
       // Filter out and sort nearest due
       const filterDate = this.memories.filter((memory) => {
-        if (memory.dueDate !== "0000-00-00") {
+        if (memory.dueDate !== "0000-00-00 00:00:00") {
           return memory;
         }
       });
@@ -64,6 +64,7 @@ export class ViewMemoryComponent implements OnInit {
         const bB = Moment(b.dueDate).unix();
         return aA - bB;
       });
+      console.log(filterDate);
       this.nearestToDueDate = nearestToDueDateArray[0].dueDate;
       // Filter out and sort nearest due
     });

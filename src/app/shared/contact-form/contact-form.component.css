@@ -1,0 +1,16 @@
+.hidden {
+  display: none;
+}
+.thank-you {
+  min-height: 1em;
+}
+form {
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  padding: 1em;
+  margin: 0.2em;
+  /* border-radius: 4px; */
+}
+
+.highlite-message {
+  color: crimson;
+}
