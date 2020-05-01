@@ -30,7 +30,7 @@ import { URL_CONFIG } from "../__envDev";
 })
 export class HttpService {
   private delayTrigger: number = 0;
-  public triggerPolling: number = 20000;
+  public triggerPolling: number = 3000;
 
   constructor(private _Http: HttpClient) {}
 

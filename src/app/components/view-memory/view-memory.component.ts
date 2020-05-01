@@ -1,16 +1,17 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit, TemplateRef, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { HttpService } from "../../services/http.service";
 import { AuthService } from "../../services/auth.service";
 import * as Moment from "moment";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-view-memory",
   templateUrl: "./view-memory.component.html",
   styleUrls: ["./view-memory.component.css"],
 })
-export class ViewMemoryComponent implements OnInit {
+export class ViewMemoryComponent implements OnInit, OnDestroy {
   tagForm: FormGroup;
   public memories = [];
   public numberOfMemories: number;
@@ -35,7 +36,7 @@ export class ViewMemoryComponent implements OnInit {
 
   modalRef: BsModalRef;
 
-  public rating: number;
+  private subscription: Subscription;
 
   constructor(
     private _Http: HttpService,
@@ -49,7 +50,7 @@ export class ViewMemoryComponent implements OnInit {
       tagName: [""],
     });
 
-    this._Http.getMemory().subscribe((res) => {
+    this.subscription = this._Http.getMemory().subscribe((res) => {
       this.memories = res;
       this.numberOfMemories = this.memories.length;
 
@@ -105,8 +106,21 @@ export class ViewMemoryComponent implements OnInit {
     }
   }
 
+  filterByImportanceUP(a, b) {
+    return parseInt(a.importance) - parseInt(b.importance);
+  }
+
+  filterByImportanceDOWN(a, b) {
+    return parseInt(b.importance) - parseInt(a.importance);
+  }
+
   sortType(sort) {
-    if (sort === "dueDate_up" || sort === "dueDate_down") {
+    if (
+      sort === "dueDate_up" ||
+      sort === "dueDate_down" ||
+      sort === "importance_up" ||
+      sort === "importance_down"
+    ) {
       if (this.countDownNumber) {
         false;
       } else {
@@ -123,6 +137,14 @@ export class ViewMemoryComponent implements OnInit {
 
     if (sort === "dueDate_down") {
       this.memories.sort(this.filterByDueDateDOWN);
+      this.showFilterArrows = false;
+    }
+    if (sort === "importance_up") {
+      this.memories.sort(this.filterByImportanceUP);
+      this.showFilterArrows = false;
+    }
+    if (sort === "importance_down") {
+      this.memories.sort(this.filterByImportanceDOWN);
       this.showFilterArrows = false;
     }
   }
@@ -222,5 +244,9 @@ export class ViewMemoryComponent implements OnInit {
       const reminderArray = { id: id, reminder: newReminder };
       this._Http.updateReminder(reminderArray).subscribe();
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
