@@ -138,3 +138,30 @@
   color: white;
   font-weight: 700;
 }
+.form-group-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.importance-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+.star-ratings-css {
+  color: #c5c5c5;
+  font-size: 25px;
+  height: 25px;
+  width: 100px;
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+}
+.star-ratings-css-top {
+  color: #e7711b;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: block;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}

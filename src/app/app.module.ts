@@ -25,8 +25,8 @@ import { MemorySearchPipe } from "./pipes/memory-search.pipe";
 import { TimeToPipe } from "./pipes/time-to.pipe";
 import { FilterDueDatePipe } from "./pipes/filter-due-date.pipe";
 import { PulsatingCircleComponent } from "./shared/pulsating-circle/pulsating-circle.component";
-import { ContactFormComponent } from './shared/contact-form/contact-form.component';
-import { ContactComponent } from './components/contact/contact.component';
+import { ContactFormComponent } from "./shared/contact-form/contact-form.component";
+import { ContactComponent } from "./components/contact/contact.component";
 
 @NgModule({
   declarations: [

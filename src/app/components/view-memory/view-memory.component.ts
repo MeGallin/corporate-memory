@@ -35,6 +35,8 @@ export class ViewMemoryComponent implements OnInit {
 
   modalRef: BsModalRef;
 
+  public rating: number;
+
   constructor(
     private _Http: HttpService,
     private formBuilder: FormBuilder,
@@ -51,7 +53,7 @@ export class ViewMemoryComponent implements OnInit {
       this.memories = res;
       this.numberOfMemories = this.memories.length;
 
-      // console.log('ALL MEMORY DATA in component', res);
+      // console.log("ALL MEMORY DATA in component", res);
 
       // Filter out and sort nearest due
       const filterDate = this.memories.filter((memory) => {
@@ -64,7 +66,7 @@ export class ViewMemoryComponent implements OnInit {
         const bB = Moment(b.dueDate).unix();
         return aA - bB;
       });
-      console.log(filterDate);
+
       this.nearestToDueDate = nearestToDueDateArray[0].dueDate;
       // Filter out and sort nearest due
     });
@@ -147,6 +149,7 @@ export class ViewMemoryComponent implements OnInit {
       memory: formData.memory.value,
       dueDate: formData.dueDate.value,
       tagNames: formData.tagNames.value,
+      importance: formData.importance.value,
     };
     this._Http.updateMemory(newForm).subscribe((memory) => {
       console.log("Form Updated", memory);

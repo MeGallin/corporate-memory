@@ -22,8 +22,8 @@ import {
   distinct,
   finalize,
 } from "rxjs/operators";
-// import { URL_CONFIG } from "../__envDev";
-import { URL_CONFIG } from "../__envProd";
+import { URL_CONFIG } from "../__envDev";
+// import { URL_CONFIG } from "../__envProd";
 
 @Injectable({
   providedIn: "root",
