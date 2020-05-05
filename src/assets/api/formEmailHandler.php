@@ -40,7 +40,7 @@ else
 $_REQUEST = json_decode($postDate, true);
 
 $my_email = "me@garyallin.uk";
-$from_email = "";
+$from_email = "no-reply@yourcorporatememory.com";
 $continue = "https://www.yourcorporatememory.com";
 $errors = array();
 

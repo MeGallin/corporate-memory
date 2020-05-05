@@ -18,13 +18,14 @@ if(isset($postData) && !empty($postData))
   $memory = mysqli_real_escape_string($conn, trim($request->memory));
   $dueDate = mysqli_real_escape_string($conn, trim($request->dueDate));
   $tagNames = mysqli_real_escape_string($conn, trim($request->tagNames));
+  $importance = mysqli_real_escape_string($conn, trim($request->importance));
 
 session_start();
 $_SESSION['emailToken'] = "$email";   
 // setcookie('emailToke', $email);
   // Store.
-  $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`, `dueDate`, `tagNames`) VALUES 
-  ('{$subId}','{$email}','{$title}','{$memory}','{$dueDate}', '$tagNames')";
+  $sql = "INSERT INTO `memories`(`subId`,`email`,`title`, `memory`, `dueDate`, `tagNames`,`importance`) VALUES 
+  ('{$subId}','{$email}','{$title}','{$memory}','{$dueDate}', '$tagNames', '$importance')";
 
   // var_dump($sql);
 
@@ -38,6 +39,7 @@ $_SESSION['emailToken'] = "$email";
         'memory' => $memory,
         'dueDate' => $dueDate,
         'tagNames' => $tagNames,
+        'importance' => $importance,
     ];
     
     echo json_encode($data);

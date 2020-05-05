@@ -9,10 +9,7 @@ if(isset($postdata) && !empty($postdata))
   // Extract the data.
   $request = json_decode($postdata); 
 
-     print_r($request)   ;
-
   // Validate.
-
   if ((int)$request->id < 1 ) {
     return http_response_code(400);
   }
@@ -23,10 +20,11 @@ if(isset($postdata) && !empty($postdata))
   $memory = mysqli_real_escape_string($conn, trim($request->memory));
   $dueDate = mysqli_real_escape_string($conn, trim($request->dueDate));
   $tagNames = mysqli_real_escape_string($conn, trim($request->tagNames));
+  $importance = mysqli_real_escape_string($conn, trim($request->importance));
 
   // Update.
   $sql = "UPDATE `memories` SET `title`='$title',`memory`='$memory', `dueDate`=
-  DATE_ADD('$dueDate', INTERVAL 12 HOUR), `tagNames`='$tagNames' WHERE `id` = '{$id}' LIMIT 1";
+  DATE_ADD('$dueDate', INTERVAL 12 HOUR), `tagNames`='$tagNames', `importance`='$importance' WHERE `id` = '{$id}' LIMIT 1";
 
   if(mysqli_query($conn, $sql))
   {
