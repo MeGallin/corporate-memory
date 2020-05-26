@@ -4,11 +4,12 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: PUT, GET, POST, DELETE");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 include_once('session.php');
+include_once('sessionZach.php');
 
 $serverName = "localhost";
-$username   = "root";
-$password   = "gazf1828";
-$dbname     = "corporate-memory";
+$username   = "corpmem_corpmem";
+$password   = "rPYfwZ48MW2^";
+$dbname     = "corpmem_yourCorporateMemory";
 
 // Create connection
 $conn = new mysqli($serverName, $username, $password, $dbname);

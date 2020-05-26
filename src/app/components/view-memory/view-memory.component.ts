@@ -1,15 +1,15 @@
-import { Component, OnInit, TemplateRef, OnDestroy } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { HttpService } from "../../services/http.service";
-import { AuthService } from "../../services/auth.service";
-import * as Moment from "moment";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { Subscription } from "rxjs";
+import { Component, OnInit, TemplateRef, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpService } from '../../services/http.service';
+import { AuthService } from '../../services/auth.service';
+import * as Moment from 'moment';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: "app-view-memory",
-  templateUrl: "./view-memory.component.html",
-  styleUrls: ["./view-memory.component.css"],
+  selector: 'app-view-memory',
+  templateUrl: './view-memory.component.html',
+  styleUrls: ['./view-memory.component.css'],
 })
 export class ViewMemoryComponent implements OnInit, OnDestroy {
   tagForm: FormGroup;
@@ -47,7 +47,7 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tagForm = this.formBuilder.group({
-      tagName: [""],
+      tagName: [''],
     });
 
     this.subscription = this._Http.getMemory().subscribe((res) => {
@@ -58,7 +58,7 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
 
       // Filter out and sort nearest due
       const filterDate = this.memories.filter((memory) => {
-        if (memory.dueDate !== "0000-00-00 00:00:00") {
+        if (memory.dueDate !== '0000-00-00 00:00:00') {
           return memory;
         }
       });
@@ -116,10 +116,10 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
 
   sortType(sort) {
     if (
-      sort === "dueDate_up" ||
-      sort === "dueDate_down" ||
-      sort === "importance_up" ||
-      sort === "importance_down"
+      sort === 'dueDate_up' ||
+      sort === 'dueDate_down' ||
+      sort === 'importance_up' ||
+      sort === 'importance_down'
     ) {
       if (this.countDownNumber) {
         false;
@@ -130,20 +130,20 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (sort === "dueDate_up") {
+    if (sort === 'dueDate_up') {
       this.memories.sort(this.filterByDueDateUP);
       this.showFilterArrows = false;
     }
 
-    if (sort === "dueDate_down") {
+    if (sort === 'dueDate_down') {
       this.memories.sort(this.filterByDueDateDOWN);
       this.showFilterArrows = false;
     }
-    if (sort === "importance_up") {
+    if (sort === 'importance_up') {
       this.memories.sort(this.filterByImportanceUP);
       this.showFilterArrows = false;
     }
-    if (sort === "importance_down") {
+    if (sort === 'importance_down') {
       this.memories.sort(this.filterByImportanceDOWN);
       this.showFilterArrows = false;
     }
@@ -152,7 +152,7 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
 
   deleteMemory(id) {
     this._Http.deleteMemory(id).subscribe((res) => {
-      console.log("Memory Deleted"), res;
+      console.log('Memory Deleted'), res;
     });
   }
 
@@ -174,7 +174,7 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
       importance: formData.importance.value,
     };
     this._Http.updateMemory(newForm).subscribe((memory) => {
-      console.log("Form Updated", memory);
+      console.log('Form Updated', memory);
     });
   }
   closeEditForm() {
@@ -201,10 +201,10 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
 
     const email = this._Auth.userProfile.name;
     const tagArray = { memoryId: id, ...tag.value, email: email };
-    console.log("tagArray", tagArray);
+    console.log('tagArray', tagArray);
     this._Http.postTag(JSON.stringify(tagArray)).subscribe(
       (res) => {
-        console.log("Tag Created", res);
+        console.log('Tag Created', res);
         return res;
       },
       (err) => {
@@ -226,21 +226,21 @@ export class ViewMemoryComponent implements OnInit, OnDestroy {
   // Delete Tag
   deleteTag(id) {
     this._Http.deleteTag(id).subscribe((res) => {
-      console.log("Tag deleted", res);
+      console.log('Tag deleted', res);
     });
   }
 
   // Reminder
   reminder(id, reminder) {
     console.log(id + reminder);
-    if (reminder === "1") {
-      const newReminder = "0";
+    if (reminder === '1') {
+      const newReminder = '0';
       const reminderArray = { id: id, reminder: newReminder };
       this._Http.updateReminder(reminderArray).subscribe();
     }
 
-    if (reminder === "0") {
-      const newReminder = "1";
+    if (reminder === '0') {
+      const newReminder = '1';
       const reminderArray = { id: id, reminder: newReminder };
       this._Http.updateReminder(reminderArray).subscribe();
     }

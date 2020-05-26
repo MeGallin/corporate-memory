@@ -1,6 +1,6 @@
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Create a Memory</h4>
+    <h4 class="modal-title pull-left">Add a Memory</h4>
     <button
       type="button"
       class="close pull-right"
@@ -82,7 +82,7 @@
                     />
                   </div>
                   <div>
-                    <label>TAG</label>
+                    <label>Importance[0-100]</label>
                     <input
                       class="form-control"
                       type="number"
@@ -133,7 +133,6 @@
                 type="text"
                 class="form-control"
                 formControlName="tagName"
-                placeholder="SUB TAG"
               />
               <span
                 >Please note, these tags are no searchable. They can be added to
@@ -173,9 +172,9 @@
 
     <span>
       You have a memory due
-      <span class="badge badge-pill badge-info">{{
-        nearestToDueDate | timeTo
-      }}</span>
+      <span class="badge badge-pill badge-info"
+        >{{ nearestToDueDate | timeTo }}</span
+      >
     </span>
   </div>
   <div class="search-wrapper">
@@ -186,7 +185,7 @@
         class="btn btn-outline-primary"
         (click)="openModal(template)"
       >
-        Create A memory
+        Add a memory
       </button>
     </div>
 

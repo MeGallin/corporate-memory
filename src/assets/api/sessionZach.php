@@ -25,6 +25,6 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // }
 
 
-$_SESSION['emailToken'] = "'me@garyallin.uk'";
-
+// $_SESSION['emailToken'] = "'me@garyallin.uk'";
+$_SESSION['emailTokenZach'] = "'zach@fisicalfitness.co.uk'";
 ?>

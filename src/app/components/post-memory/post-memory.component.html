@@ -6,7 +6,6 @@
       type="text"
       id="title"
       formControlName="title"
-      placeholder="Title"
     />
   </div>
 
@@ -16,7 +15,6 @@
       class="form-control"
       id="memory"
       formControlName="memory"
-      placeholder="Memory"
       required
     ></textarea>
   </div>
@@ -28,7 +26,6 @@
       class="form-control"
       id="dueDate"
       formControlName="dueDate"
-      placeholder="Due Date"
       bsDatepicker
       [bsConfig]="{ isAnimated: true }"
       [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
@@ -37,23 +34,21 @@
 
   <div class="form-group form-group-wrapper">
     <div>
-      <label>TAG [searchable]</label>
+      <label>TAG</label>
       <input
         type="text"
         class="form-control"
         id="tagNames"
         formControlName="tagNames"
-        placeholder="TAG"
       />
     </div>
     <div>
-      <label>Importance [searchable]</label>
+      <label>Importance [0-100]</label>
       <input
         type="number"
         class="form-control"
         id="importance"
         formControlName="importance"
-        placeholder="Importance"
         max="100"
         min="0"
       />

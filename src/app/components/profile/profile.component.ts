@@ -6,7 +6,7 @@ import { HttpService } from '../../services/http.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
   profile: any;
@@ -18,22 +18,24 @@ export class ProfileComponent implements OnInit {
     } else {
       this._Auth.getProfile((err, profile) => {
         this.profile = profile;
+
         const email = this.profile.name;
-        const emailArray = { email: email };
+        const subId = this.profile.sub;
+        const emailArray = { email: email, subId: subId };
         this.sendEmail(JSON.stringify({ ...emailArray }));
       });
     }
   }
 
   sendEmail(email) {
-    // console.log(email);
+    console.log(email);
     // const emailArray = { email: email };
     this._Http.postSession(email).subscribe(
-      res => {
+      (res) => {
         console.log('Session done', res);
         return res;
       },
-      err => {
+      (err) => {
         //  console.log('There was an error', err);
         return err;
       }
